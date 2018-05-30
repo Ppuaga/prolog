@@ -1,0 +1,65 @@
+:- module(_,_,[bf]).
+
+concatenar([],L,L).
+concatenar([X|Y],Z,[X|U]):- concatenar(Y,Z,U).
+
+ultimo(X,[X]).
+ultimo(X,[_|R]):- ultimo(X,R).
+
+inversa([],[]).
+inversa([X|R],L):-inversa(R,L1),
+	concatenar(L1,[X],L).
+
+duplica([],[]).
+duplica([X|Xs],[X,X|L]):-duplica(Xs,L).
+
+duplica2([],[]).
+duplica2([X|Xs],[X|L]):-duplica2(Xs,L).
+
+extrae([],[],_).
+extrae([X|Xs],[Y|Ys],[[X,Y]|L]):-extrae(Xs,Ys,L).
+
+cartesiano([],[],[]).
+cartesiano([X|Xs],[Y|Ys],[[X,Y]|L]):-cartesiano(X,[Y|Ys],L),
+    cartesiano(Xs,Ys,L).
+
+rellenar(_,[],[]).
+rellenar([X|Xs],[_|Ys],[X|Ls]):-
+    concatenar(Xs,[X],L1),
+    rellenar(L1,Ys,Ls).
+
+reres(_,[],_).
+reres(X,Y,L):-
+    concatenar(X,L,L1),
+    rellenar(X,Y,L1).
+	
+
+vibora(_,_,[],[]).
+vibora(P,C,[_|Fs],[R|R1]):-
+    vibora(P,C,Fs,R1),
+    rellenar(P,C,R).
+
+
+vib(_,[],[]).
+vib([P|Ps],[_|Cs],[P|Z]):-
+    concatenar(Ps,[P],H),
+    vib(H,Cs,Z).
+
+vib2(_,_,[],[]).
+vib2([P|Ps],[C|Cs],[_|Fs],[[P|Z]|T]):-
+    duplica2([C|Cs],L),
+    concatenar(Ps,[P],H),
+    vib2(H,L,Fs,T),
+    vib(H,L,Z).
+
+vib4(_,_,[],[]).
+vib4([P|Ps],C,[_,_|Fs],[Z,Z1|T]):-   
+    duplica2(C,L),
+    vib([P|Ps],C,Z),    
+	concatenar(Ps,[P],H1),
+    vib(H1,C,Z11),
+    inversa(Z11,Z1),
+	concatenar(H1,Ps,H2),
+    vib4(H2,L,Fs,T).
+    
+    

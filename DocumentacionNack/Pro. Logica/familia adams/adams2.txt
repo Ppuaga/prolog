@@ -1,0 +1,88 @@
+:- module(_,_,[bf]).
+:- use_package(pure).
+
+%RELACIONES INICIALES
+
+%Homero es padre de Pericles y Merlina
+padre(Homero,Merlina).
+padre(Homero,Pericles).
+%Morticia es madre de Pericles y Merlina
+madre(Morticia,Merlina).
+madre(Morticia,Pericles).
+%Abu Adams es madre de Homero, TLucas, TCosa
+madre(AbuAdams,Homero).
+madre(AbuAdams,TLucas).
+madre(AbuAdams,TCosa).
+
+
+%Homero,TLucas,TCosa,Pericles son chicos
+man(Homero).
+man(TLucas).
+man(TCosa).
+man(Pericles).
+%AbuAdams,Morticia son chicas
+woman(AbuAdams).
+woman(Morticia).
+%Morticia y Homero son conyuges
+conyuge(Morticia,Homero).
+conyuge(Homero,Morticia).
+
+%REGLAS
+
+%hijo_de(TLucas,AbuAdams):-madre(AbuAdams,TLucas),man(TLucas).
+hijo(X,Y):-madre(Y,X),man(X).
+hijo(X,Y):-padre(Y,X),man(X).
+
+%hija_de(Merlina,Morticia):-progenitor(Morticia,Merlina),woman(Merlina).
+hija(X,Y):-madre(Y,X),woman(X).
+hija(X,Y):-padre(Y,X),woman(X).
+
+bro(Y,Z):- madre(X,Y),madre(X,Z).
+%hermano_de(Pericles,Merlina):-madre(X,Pericles),madre(X,Merlina),man(Pericles).
+hermano(Y,Z):-madre(X,Y),madre(X,Z),man(Y).
+hermana(Y,Z):-madre(X,Y),madre(X,Z),woman(Y).
+
+%tio_de(TLucas,Merlina):-padre(X,Merlina),hermano(TLucas,X).
+tio(Z,Y):-madre(X,Y),hermano(Z,X).
+tio(Z,Y):-padre(X,Y),hermano(Z,X).
+
+%sin ejemplos
+tia(Z,Y):-madre(X,Y),hermana(Z,X).
+tia(Z,Y):-padre(X,Y),hermana(Z,X).
+
+%sin ejemplos
+abuelo(X,Z):-padre(X,Y),padre(Y,Z).
+abuelo(X,Z):-padre(X,Y),madre(Y,Z).
+
+%abuela_de(AbuAdams,Merlina):-madre_de(AbuAdams,Y),padre_de(Y,Merlina).
+abuela(X,Z):-madre(X,Y),padre(Y,Z).
+abuela(X,Z):-madre(X,Y),madre(Y,Z).
+
+%sobrino_de(Pericles,TCosa):-hijo(Pericles,Z),bro(TCosa,Z).
+sobrino(X,Y):-hijo(X,Z),bro(Y,Z).
+
+%sobrina_de(Merlina,TLucas):-hija(Merlina,Z),bro(TLucas,Z).
+sobrina(X,Y):-hija(X,Z),bro(Y,Z).
+
+%cunado_de(TLucas,Morticia):-conyuge(Morticia,Z),bro(TLucas,Z).
+cunado(X,Y):-conyuge(Y,Z),bro(X,Z),man(X).
+cunado(X,Y):-conyuge(X,Z),bro(Y,Z),man(X).
+
+%cunada_de(Morticia,TLucas):-conyuge(Morticia,Z),bro(TLucas,Z).
+cunada(X,Y):-conyuge(Y,Z),bro(X,Z),woman(X).
+cunada(X,Y):-conyuge(X,Z),bro(Y,Z),woman(X).
+
+%sin ejemplo
+suegro(Y,X):-conyuge(X,Z),padre(Y,Z).
+%suegra_de(AbuAdams,Merlina):-conyuge(Merlina,Z),madre(AbuAdams,Z).
+suegra(Y,X):-conyuge(X,Z),madre(Y,Z).
+
+%sin ejemplo
+consuegro(Y,X):-progenitor(X,Z),suegro(Y,Z).
+%sin ejemplo
+consuegra(Y,X):-progenitor(X,Z),suegra(Y,Z).
+
+%Fin del fichero
+
+
+
