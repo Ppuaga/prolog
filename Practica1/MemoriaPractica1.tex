@@ -1,0 +1,306 @@
+\documentclass[11pt, a4paper]{article}
+
+\renewcommand{\contentsname}{Contenidos}
+
+% Packages
+\usepackage{blindtext}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ 
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=prolog,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\title{\Huge Memoria Práctica 1 de Programación Declarativa}
+\date{Viernes 4 de Mayo, 2018}
+\author{Kiyoshi José Omaza Saldaña\\ v13m080
+\and Sergio Fontán Llamas\\ u12m073
+\and Pablo Puado García\\ v13m047}
+
+
+\begin{document}
+\pagenumbering{gobble}
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+\section{Redondeo de números decimales}
+El redondeo es el proceso de descartar ciertas cifras en un número decimal. Se utiliza
+con el objetivo de manejar los números con mayor facilidad para poder realizar
+cálculos con ellos.\\
+Hay diferentes formas de realizar el redondeo. En esta práctica se va a tener en
+cuenta el siguiente enfoque:\\
+\begin{itemize}
+ \item \textit{Redondeo a las unidades}: Si la primera cifra despues de la coma del número decimal es menor que 5, no hay que realizar ninguna operación y el resultado del proceso es la parte entera del número decimal. Por el contrario, si dicha cifra es mayor o igual que 5, entonces se debe sumar 1 (una unidad) al número. Por ejemplo:
+ $$5,36 \rightarrow 5$$
+ $$32,74 \rightarrow 33$$
+ \item \textit{Redondeo a las décimas}: Si la cifra de las centésimas (es decir, la segunda cifra después de la coma) es menor que 5, no hay que realizar ninguna operación y el resultado del proceso es el número original hasta la cifra que representa las décimas. Por el contrario, si dicha cifra es mayor o igual que 5, entonces se debe sumar 1 a la cifra que representa las décimas (descartando en este caso el resto de decimales). Por ejemplo:
+ $$32,74 \rightarrow 32,7$$
+ $$5,36 \rightarrow 5,4$$
+ \item \textit{Redondeo a las centésimas}: Si la cifra de las milésimas (es decir, la tercera cifra después de la coma) es menor que 5, no hay que realizar ninguna operación y el resultado del proceso es el número original hasta la cifra que representa las centésimas. Por el contrario, si dicha cifra es mayor o igual que 5, entonces se debe sumar 1 a la cifra que representa las centésimas (descartando en este caso el resto de decimales). Por ejemplo:
+ $$32,743 \rightarrow 32,74$$
+ $$5,369 \rightarrow 5,37$$
+\end{itemize}
+Para facilitar el autoaprendizaje del proceso de redondeo, la escuela María Martín quiere contar con un programa que realice dicho proceso y que mantenga la representación del número original a redondear así como del número obtenido después del redondeo.\\
+Para cubrir esta necesidad se plantea la realización de un \textbf{programa lógico puro} en el que:
+\begin{enumerate}
+ \item El número a redondear se representa como una lista de sus cifras (entre 0 y 9, en representación de \textbf{Peano}) en el orden correspondiente, incluyendo en la posición adecuada el separador decimal (la coma).
+ \item El resultado del redondeo se representa como una estructura $redondeo/3$, en la que el primer argumento representa el tipo de redondeo (a unidad, a las décimas o a las centésimas), el segundo argumento representa el número a redondear mediante la estructura $numeroOriginal/3$, y el tercer argumento representa el número redondeado con la estructura $numeroRedondeado/3$.\\Tanto $numeroOriginal/3$ como $numeroRedondeado/3$ tienen como primer argumento el separador decimal, como segundo argumento una lista con las cifras de la parte entera del número, y como tercer argumento una lista con las cifras de la parte decimal del número.
+\end{enumerate}
+Se pide que los alumnos escriban el predicado $redondearDecimal/3$:
+\begin{lstlisting}[frame=single]
+redondearDecimal(NumeroInicial,TipoRedondeo,NumeroFinal).
+\end{lstlisting}
+Por ejemplo:
+\begin{lstlisting}[frame=single]
+?-redondearDecimal([s(s(s(s(s(0))))),',',s(s(s(0)))],redondeoUnidad,redondeo(redondeoUnidad,numeroOriginal(',',[s(s(s(s(s(0)))))],[s(s(s(0)))]),numeroRedondeado(',',[s(s(s(s(s(0)))))],[]))).
+yes
+\end{lstlisting}
+\subsection{Código utilizado}
+\subsubsection{Predicado $agregaUltimo/3$}
+\begin{lstlisting}[frame=single]
+agregaUltimo([],X,[X]).
+agregaUltimo([H|T],X,[H|L]):-agregaUltimo(T,X,L).
+\end{lstlisting}
+Este predicado recibe como argumento dos listas y un elemento.\\
+El predicado agrega un elemento dado al final de una lista
+\subsubsection{Predicado $mayorIgual/2$}
+\begin{lstlisting}[frame=single]
+mayorIgual(0,0).
+mayorIgual(s(_),0).
+mayorIgual(s(X),s(Y)):-mayorIgual(X,Y).
+\end{lstlisting}
+Este predicado recibe como argumentos dos elementos.\\
+El predicado realiza una comparación del valor de dos elementos e indica si uno de ellos es mayor o igual que el otro.
+\subsubsection{Predicado $menor/2$}
+\begin{lstlisting}[frame=single]
+menor(0,s(_)).
+menor(s(X),s(Y)):-menor(X,Y).
+\end{lstlisting}
+Este predicado recibe como argumentos dos elementos.\\
+El pedicado realiza una comparación del valor de dos elementos e indica si uno es menor que el otro.
+\subsubsection{Predicado $reverse/3$}
+\begin{lstlisting}[frame=single]
+reverse([],Z,Z).
+reverse([H|T],Z,Acc) :- reverse(T,Z,[H|Acc]).
+\end{lstlisting}
+Este predicado recibe como argumentos una lista y dos elementos.\\
+El predicado invierte una lista dada.
+\subsubsection{Predicado $acarreoDecimal/3$}
+\begin{lstlisting}[frame=single]
+acarreoDecimal([X|[]], [X|[]]):-mayorIgual(X,s(s(s(s(s(s(s(s(s(s(0))))))))))).
+acarreoDecimal([X|Y], [X|Y]):- menor(X,s(s(s(s(s(s(s(s(s(s(0))))))))))). 
+acarreoDecimal([X|[Y|Z]], [0|F]):-
+    mayorIgual(X,s(s(s(s(s(s(s(s(s(s(0))))))))))),
+    acarreoDecimal([s(Y)|Z], F).
+\end{lstlisting}
+Este predicado recibe como argumentos dos listas.\\
+El predicado obtiene los acarreos de la parte decimal del número para luego realizar la operación necesaria para el redondeo.
+\subsubsection{Predicado $acarreoEntero/2$}
+\begin{lstlisting}[frame=single]
+acarreoEntero([X|[]], [0,s(0)]):-mayorIgual(X,s(s(s(s(s(s(s(s(s(s(0))))))))))).
+acarreoEntero([X|Y], [X|Y]):- menor(X,s(s(s(s(s(s(s(s(s(s(0))))))))))). 
+acarreoEntero([X|[Y|Z]], [0|F]):-
+    mayorIgual(X,s(s(s(s(s(s(s(s(s(s(0))))))))))),
+    acarreoEntero([s(Y)|Z], F).
+\end{lstlisting}
+El predicado recibe como argumentos dos listas.\\
+El predicado obtiene los acarreos de la parte entera del número para luego realizar la operación necesaria para el redondeo.
+\subsubsection{Predicado $sumaUno/3$}
+\begin{lstlisting}[frame=single]
+acarreoEntero([X|[]], [0,s(0)]):-mayorIgual(X,s(s(s(s(s(s(s(s(s(s(0))))))))))).
+acarreoEntero([X|Y], [X|Y]):- menor(X,s(s(s(s(s(s(s(s(s(s(0))))))))))). 
+acarreoEntero([X|[Y|Z]], [0|F]):-
+    mayorIgual(X,s(s(s(s(s(s(s(s(s(s(0))))))))))),
+    acarreoEntero([s(Y)|Z], F).
+\end{lstlisting}
+Este predicado recibe como argumentos tres elementos y uno de ellos puede ser una lista.\\
+El predicado suma uno a la parte del número indicada dependiendo del acarreo.
+\subsubsection{Predicado $acarreoTotal/4$}
+\begin{lstlisting}[frame=single]
+acarreoTotal(ParteEntera, [X|Y], ParteEntera, [X|Y]):- menor(X,s(s(s(s(s(s(s(s(s(s(0))))))))))).
+acarreoTotal([Y|Z], [X|_], F, []):-
+    mayorIgual(X,s(s(s(s(s(s(s(s(s(s(0))))))))))),
+    acarreoEntero([s(Y)|Z], F).
+\end{lstlisting}
+Este predicado recibe como argumentos dos elementos y dos listas.\\
+Esta función muestra el acarreo total que se obtiene al realizar el redondeo.
+\subsubsection{Predicado $completaAcarreo/4$}
+\begin{lstlisting}[frame=single]
+completaAcarreo(ParteEntera, ParteDecimal, EnteroFinal, DecimalFinal):-
+    reverse(ParteEntera, InversoEntero, []),
+    reverse(ParteDecimal, InversoDecimal, []),
+    acarreoDecimal(InversoDecimal, DecimalConAcarreo),
+    reverse(DecimalConAcarreo, ParteDecimalNueva, []),
+    acarreoTotal(InversoEntero, ParteDecimalNueva, EnteroConAcarreo, DecimalFinal),
+    reverse(EnteroConAcarreo, EnteroFinal, []).
+\end{lstlisting}
+Este predicado recibe como argumentos cuatro elementos.\\
+Se trata de una función auiliar para poder realizar las demas operaciones de acarreo correctamente.
+\subsubsection{Predicado $redondeo/3$}
+\begin{lstlisting}[frame=single]
+redondeo(redondeoUnidad, numeroOriginal(',', ParteEntera, [Y|_]), numeroRedondeado(',',EnteroFinal,[])):-
+    reverse(ParteEntera, [X|Z]),
+    sumaUno(X,Y, XNuevo),
+    acarreoEntero([XNuevo|Z], EnteroConAcarreo),
+    reverse(EnteroConAcarreo, EnteroFinal, []).
+
+redondeo(redondeoDecima, numeroOriginal(',', ParteEntera, [Y]), numeroRedondeado(',',ParteEntera, [Y])).
+redondeo(redondeoDecima, numeroOriginal(',', ParteEntera, [Y,Z|_]), numeroRedondeado(',',EnteroFinal, DecimalFinal)):-
+    sumaUno(Y,Z, YNueva),
+    completaAcarreo(ParteEntera, [YNueva], EnteroFinal, DecimalFinal).
+
+redondeo(redondeoCentesima, numeroOriginal(',', ParteEntera, [Y,Z]), numeroRedondeado(',',ParteEntera, [Y,Z])).
+redondeo(redondeoCentesima, numeroOriginal(',', ParteEntera, [Y,Z,W|_]), numeroRedondeado(',',EnteroFinal, DecimalFinal)):-
+    sumaUno(Z,W, ZNueva),
+    completaAcarreo(ParteEntera, [Y,ZNueva], EnteroFinal, DecimalFinal).
+\end{lstlisting}
+Este predicado recibe como argumentos tres elementos.\\
+El funcionamiento de $redondeo/3$ recibe un número, el tipo de redondeo y el número redondeado y compara ambos números.
+\subsubsection{Predicado $parteEnteraDecimal/4$}
+\begin{lstlisting}[frame=single]
+parteEnteraDecimal([','|ParteDecimal], ParteEntera, ParteEntera, ParteDecimal).
+parteEnteraDecimal([X|Z], ParteEntera, ParteEnteraFinal, ParteDecimal):-
+    agregaUltimo(ParteEntera, X, ParteEnteraNueva),
+    parteEnteraDecimal(Z, ParteEnteraNueva, ParteEnteraFinal, ParteDecimal).
+\end{lstlisting}
+Este predicado recibe como argumentos una lista y 3 elementos.\\
+El predicado devuelve el número dado en el formato que más nos conviene para el buen funcionamiento de las otras funciones.
+\subsubsection{Predicado $redondearDecimal/3$}
+\begin{lstlisting}[frame=single]
+redondearDecimal(NumeroInicial, TipoRedondeo, NumeroFinal):-
+    parteEnteraDecimal(NumeroInicial,[],ParteEntera, ParteDecimal),
+    redondeo(TipoRedondeo, numeroOriginal(',', ParteEntera, ParteDecimal), NumeroFinal).
+\end{lstlisting}
+Este predicado recibe como argumentos tres elementos.\\
+El predicado, dado el número inicial divide este en parte entera y parte decimal, y dependiendo de el tipo de redondeo que se le haya indicado lo realizará y se devolverá el número final junto otra vez.
+\subsection{Pruebas realizadas}
+
+\section{Cuadrados fantásticos y secretos}
+Un cuadrado fantástico es una tabla o matriz de números enteros pares, de tal forma que la suma de los números por columnas y por filas es la misma (es decir, todas las columnas y todas las filas suman la misma cantidad). Los números pares empleados para rellenar las casillas de dicho cuadrado son consecutivos, de $2$ a $(2*N)$, siendo $N$ el número de columnas y filas del cuadrado fantástico.\\
+Por ejemplo, las siguiente matriz es un cuadrado fantástico en el que todas las columnas y todas las filas suman 12.
+% Tabla de ejemplo
+$$
+\begin{tabular}{| l | c | r |}
+ \hline
+ 2 & 4 & 6 \\ \hline
+ 6 & 2 & 4 \\ \hline
+ 4 & 6 & 2 \\
+ \hline
+\end{tabular}
+$$
+\\
+Un cuadrado fantástico es secreto cuando cumple la propiedad de las tres esquinas. Esta propiedad se verifica cuando 2 esquinas están rellenas con el mismo número par $(A)$, y la suma de las otras dos esquinas es igual a dicho par $(B+C=A)$. Dicho número par $(A)$ se denomina número secreto.\\
+Por ejemplo, la siguiente matriz es un cuadrado fantástico secreto $(A=8; B=2; C=6)$ cuyo número secreto es $8$.
+% Tabla de ejemplo
+$$
+\begin{tabular}{| l | c | c | r |}
+ \hline
+ 2 & 4 & 6 & 8 \\ \hline
+ 4 & 6 & 8 & 2 \\ \hline
+ 6 & 8 & 2 & 4 \\ \hline
+ 8 & 2 & 4 & 6 \\
+ \hline
+\end{tabular}
+$$
+\\
+Se plantea la realización de un programa lófico puro en el que las matrices se representan como listas de listas (es decir, una matriz es una lista cuyos elementos son listas de números, en representación de Peano, que representan las filas).\\
+Se pide que los alumnos escriban el predicado $esCuadradoFantasticoSecreto/2$ que se verifique si su primer argumento (una matriz $M*M$) representa un cuadrado fantástico 2 secreto y su segundo argumento es el número secreto.\\
+Por ejemplo: 
+\begin{lstlisting}[frame=single]
+?-esCuadradoFantasticoSecreto([[s(s(0)),s(s(s(s(0)))),s(s(s(s(s(s(0))))))],[s(s(s(s(0)))),s(s(s(s(s(s(0)))))),s(s(0))],[s(s(s(s(s(s(0)))))),s(s(0)),s(s(s(s(0))))]],s(s(s(s(s(s(0))))))).
+yes
+\end{lstlisting}
+\subsection{Código utilizado}
+\subsubsection{Predicado $primerElemento/2$}
+\begin{lstlisting}[frame=single]
+primerElemento([X|_],X).
+\end{lstlisting}
+Este predicado tiene como argumentos una lista y un elemento dado (que puede ser una lista).\\
+La consulta devuelve un valor true si el elemento dado es la cabeza de la lista que se le esta pasando, y en caso de que sea una matriz se devuelve la primera fila. En caso contrario devolverá false.
+\subsubsection{Predicado $ultimoElemento/2$}
+\begin{lstlisting}[frame=single]
+ultimoElemento([Y],Y).
+ultimoElemento([_|Xs],Y):-ultimoElemento(Xs,Y).
+\end{lstlisting}
+Este predicado tiene como argumentos una lista y un elemento dado (que puede ser una lista). \\
+La consulta devuelve true si el elemento dado es el último elemento de la lista que se le esta pasando, y en caso de que sea una matriz se devuelve la última fila. En caso contrario devolverá false.
+\subsubsection{Predicado $suma/2$}
+\begin{lstlisting}[frame=single]
+suma(X,0,X).
+suma(A,s(B),s(Y)):-suma(A,B,Y).
+\end{lstlisting}
+A este predicado se le pasan como argumentos tres elementos.
+La consulta devuelve true si el tercer elemento dado es la suma de los dos anteriores. En caso contrario se devuelve false.
+\subsubsection{Predicado $triplicar/2$}
+\begin{lstlisting}[frame=single]
+triplicar(0,0).
+triplicar(s(X),s(s(s(Y)))):-triplicar(X,Y).
+\end{lstlisting}
+A este predicado se le pasan como argumentos dos elementos.
+La consulta devuelve true si el segundo elemento dado tiene un valor igual al triple del primer elemento. En caso contrario devolverá false.
+\subsubsection{Predicado $esCuadradoFantasticoSecreto/2$}
+\begin{lstlisting}[frame=single]
+esCuadradoFantasticoSecreto(M,S):-
+	primerElemento(M,L1),
+	primerElemento(L1,X1),
+	
+	ultimoElemento(M,Ln),
+	ultimoElemento(Ln,Xn),
+	
+	suma(X1,Xn,S1),
+	
+	ultimoElemento(L1,X2),
+	primerElemento(Ln,Xn1),
+	
+	suma(X2,Xn1,S2),
+	suma(S1,S2,S3),
+	
+	triplicar(S,S3).
+\end{lstlisting}
+Este predicado tiene como argumentos una lista y un elemento dado.
+La consulta devuelve true si el elemento es \textit{número secreto}. En caso contrario devolverá false.
+\subsection{Pruebas realizadas}
+\begin{lstlisting}[frame=single]
+?-esCuadradoFantasticoSecreto([[s(s(0)),s(s(s(s(0)))),s(s(s(s(s(s(0))))))],[s(s(s(s(0)))),s(s(s(s(s(s(0)))))),s(s(0))],[s(s(s(s(s(s(0)))))),s(s(0)),s(s(s(s(0))))]],s(s(s(s(s(s(0))))))).
+yes
+
+?-esCuadradoFantasticoSecreto([[s(s(0)),s(s(s(s(0)))),s(s(s(s(s(s(0))))))],[s(s(s(s(0)))),s(s(s(s(s(s(0)))))),s(s(0))],[s(s(s(s(s(s(0)))))),s(s(0)),s(s(s(s(0))))]],S).
+S = s(s(s(s(s(s(0))))))
+
+?-esCuadradoFantasticoSecreto([[s(s(0)),s(s(s(s(0)))),s(s(s(s(s(s(0)))))),s(s(s(s(s(s(s(s(0))))))))],[s(s(s(s(0)))),s(s(s(s(s(s(0)))))),s(s(s(s(s(s(s(s(0)))))))),s(s(0))],[s(s(s(s(s(s(0)))))),s(s(s(s(s(s(s(s(0)))))))),s(s(0)),s(s(s(s(0))))],[s(s(s(s(s(s(s(s(0)))))))),s(s(0)),s(s(s(s(0)))),s(s(s(s(s(s(0))))))]],S).
+S = s(s(s(s(s(s(s(s(0))))))))
+\end{lstlisting}
+\end{document}

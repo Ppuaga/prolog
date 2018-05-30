@@ -1,0 +1,23 @@
+\contentsline {section}{\numberline {1}Redondeo de n\IeC {\'u}meros decimales}{1}
+\contentsline {subsection}{\numberline {1.1}C\IeC {\'o}digo utilizado}{2}
+\contentsline {subsubsection}{\numberline {1.1.1}Predicado $agregaUltimo/3$}{2}
+\contentsline {subsubsection}{\numberline {1.1.2}Predicado $mayorIgual/2$}{2}
+\contentsline {subsubsection}{\numberline {1.1.3}Predicado $menor/2$}{3}
+\contentsline {subsubsection}{\numberline {1.1.4}Predicado $reverse/3$}{3}
+\contentsline {subsubsection}{\numberline {1.1.5}Predicado $acarreoDecimal/3$}{3}
+\contentsline {subsubsection}{\numberline {1.1.6}Predicado $acarreoEntero/2$}{3}
+\contentsline {subsubsection}{\numberline {1.1.7}Predicado $sumaUno/3$}{4}
+\contentsline {subsubsection}{\numberline {1.1.8}Predicado $acarreoTotal/4$}{4}
+\contentsline {subsubsection}{\numberline {1.1.9}Predicado $completaAcarreo/4$}{4}
+\contentsline {subsubsection}{\numberline {1.1.10}Predicado $redondeo/3$}{5}
+\contentsline {subsubsection}{\numberline {1.1.11}Predicado $parteEnteraDecimal/4$}{5}
+\contentsline {subsubsection}{\numberline {1.1.12}Predicado $redondearDecimal/3$}{6}
+\contentsline {subsection}{\numberline {1.2}Pruebas realizadas}{6}
+\contentsline {section}{\numberline {2}Cuadrados fant\IeC {\'a}sticos y secretos}{6}
+\contentsline {subsection}{\numberline {2.1}C\IeC {\'o}digo utilizado}{7}
+\contentsline {subsubsection}{\numberline {2.1.1}Predicado $primerElemento/2$}{7}
+\contentsline {subsubsection}{\numberline {2.1.2}Predicado $ultimoElemento/2$}{7}
+\contentsline {subsubsection}{\numberline {2.1.3}Predicado $suma/2$}{7}
+\contentsline {subsubsection}{\numberline {2.1.4}Predicado $triplicar/2$}{8}
+\contentsline {subsubsection}{\numberline {2.1.5}Predicado $esCuadradoFantasticoSecreto/2$}{8}
+\contentsline {subsection}{\numberline {2.2}Pruebas realizadas}{8}
