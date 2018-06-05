@@ -230,27 +230,7 @@ cierre(Le, X):-
   comb_N(T, Le, X),
   eslabones_all(X).
 \end{lstlisting}
-Este es uno de los tres métodos principales dados por la práctica.
-Este predicado recibe una lista de eslabones y devuelve otra lista con todas las posibles cadenas que se pueden formar con los eslabones del primer argumento.
-Las cadenas que se obtienen son todas correctas y cumplen los requisitos establecidos por la práctica.
-\subsubsection{Predicado $cierreMinimo/2$}
-\begin{lstlisting}[frame=single]
-cierreMinimo(L, N):-
-  cierre(L, S), !, size(S, N).
-\end{lstlisting}
-Este es otro de los tres métodos principales dados por la práctica.
-Este predicado es una extensión del método $cierre/2$, pero en este caso se devuelve el número mínimo de eslabones de la lista del argumento uno con los que se puede formar una cadena correctamente.
-\subsubsection{Predicado $cierreUnico/2$}
-\begin{lstlisting}[frame=single]
-cierreUnico(LE, Xs):-
-  length(LE, T), T >= 3,
-  not(vertex_same(LE)),
-  not(eslabones_same(LE)),
-  comb_one(T, LE, X),
-  join_eslabon(X, Xs).
-\end{lstlisting}
-Este es otro de los tres métodos principales dados por la práctica.
-Al igual que $cierreUnico/2$ es una extensión de $cierre/2$, pero en esta ocasión el predicado devuelve una lista de cadenas en las que los eslabones ya usados en una cadena no van a poder estar en otra cadena.
+Este 
 
 \subsection{Pruebas realizadas}
 

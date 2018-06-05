@@ -1,0 +1,92 @@
+cierre([eslabon(c,b),eslabon(c,d),eslabon(a,b),eslabon(e,b),eslabon(d,b),eslabon(a,e)], Cierre).
+
+Cierre = [eslabon(c, b), eslabon(c, d), eslabon(d, b)]
+Cierre = [eslabon(c, d), eslabon(c, b), eslabon(d, b)]
+Cierre = [eslabon(c, d), eslabon(d, b), eslabon(c, b)]
+Cierre = [eslabon(c, b), eslabon(d, b), eslabon(c, d)]
+Cierre = [eslabon(d, b), eslabon(c, b), eslabon(c, d)]
+Cierre = [eslabon(d, b), eslabon(c, d), eslabon(c, b)]
+Cierre = [eslabon(a, b), eslabon(e, b), eslabon(a, e)]
+Cierre = [eslabon(e, b), eslabon(a, b), eslabon(a, e)]
+Cierre = [eslabon(e, b), eslabon(a, e), eslabon(a, b)]
+Cierre = [eslabon(a, b), eslabon(a, e), eslabon(e, b)]
+Cierre = [eslabon(a, e), eslabon(a, b), eslabon(e, b)]
+Cierre = [eslabon(a, e), eslabon(e, b), eslabon(a, b)]
+Cierre = [eslabon(e, b), eslabon(c, b), eslabon(c, d), eslabon(d, b), eslabon(a, b), eslabon(a, e)]
+Cierre = [eslabon(e, b), eslabon(d, b), eslabon(c, d), eslabon(c, b), eslabon(a, b), eslabon(a, e)]
+Cierre = [eslabon(a, b), eslabon(c, b), eslabon(c, d), eslabon(d, b), eslabon(e, b), eslabon(a, e)]
+Cierre = [eslabon(a, b), eslabon(d, b), eslabon(c, d), eslabon(c, b), eslabon(e, b), eslabon(a, e)]
+Cierre = [eslabon(c, b), eslabon(c, d), eslabon(d, b), eslabon(e, b), eslabon(a, e), eslabon(a, b)]
+Cierre = [eslabon(c, d), eslabon(d, b), eslabon(e, b), eslabon(a, e), eslabon(a, b), eslabon(c, b)]
+Cierre = [eslabon(d, b), eslabon(c, d), eslabon(c, b), eslabon(e, b), eslabon(a, e), eslabon(a, b)]
+Cierre = [eslabon(d, b), eslabon(e, b), eslabon(a, e), eslabon(a, b), eslabon(c, b), eslabon(c, d)]
+Cierre = [eslabon(c, b), eslabon(c, d), eslabon(d, b), eslabon(a, b), eslabon(a, e), eslabon(e, b)]
+Cierre = [eslabon(c, d), eslabon(d, b), eslabon(a, b), eslabon(a, e), eslabon(e, b), eslabon(c, b)]
+Cierre = [eslabon(d, b), eslabon(c, d), eslabon(c, b), eslabon(a, b), eslabon(a, e), eslabon(e, b)]
+Cierre = [eslabon(d, b), eslabon(a, b), eslabon(a, e), eslabon(e, b), eslabon(c, b), eslabon(c, d)]
+Cierre = [eslabon(c, d), eslabon(c, b), eslabon(e, b), eslabon(a, e), eslabon(a, b), eslabon(d, b)]
+Cierre = [eslabon(e, b), eslabon(a, e), eslabon(a, b), eslabon(c, b), eslabon(c, d), eslabon(d, b)]
+Cierre = [eslabon(c, b), eslabon(e, b), eslabon(a, e), eslabon(a, b), eslabon(d, b), eslabon(c, d)]
+Cierre = [eslabon(e, b), eslabon(a, e), eslabon(a, b), eslabon(d, b), eslabon(c, d), eslabon(c, b)]
+Cierre = [eslabon(c, d), eslabon(c, b), eslabon(a, b), eslabon(a, e), eslabon(e, b), eslabon(d, b)]
+Cierre = [eslabon(a, b), eslabon(a, e), eslabon(e, b), eslabon(c, b), eslabon(c, d), eslabon(d, b)]
+Cierre = [eslabon(c, b), eslabon(a, b), eslabon(a, e), eslabon(e, b), eslabon(d, b), eslabon(c, d)]
+Cierre = [eslabon(a, b), eslabon(a, e), eslabon(e, b), eslabon(d, b), eslabon(c, d), eslabon(c, b)]
+Cierre = [eslabon(a, e), eslabon(e, b), eslabon(c, b), eslabon(c, d), eslabon(d, b), eslabon(a, b)]
+Cierre = [eslabon(a, e), eslabon(e, b), eslabon(d, b), eslabon(c, d), eslabon(c, b), eslabon(a, b)]
+Cierre = [eslabon(a, e), eslabon(a, b), eslabon(c, b), eslabon(c, d), eslabon(d, b), eslabon(e, b)]
+Cierre = [eslabon(a, e), eslabon(a, b), eslabon(d, b), eslabon(c, d), eslabon(c, b), eslabon(e, b)]
+
+
+
+
+cierre([eslabon(c,b),eslabon(c,d),eslabon(a,b)], Cierre).
+
+No
+
+
+
+
+cierre([eslabon(c,b),eslabon(c,d),eslabon(d,b)], Cierre).
+
+Cierre = [eslabon(c, b), eslabon(c, d), eslabon(d, b)]
+Cierre = [eslabon(c, d), eslabon(c, b), eslabon(d, b)]
+Cierre = [eslabon(c, d), eslabon(d, b), eslabon(c, b)]
+Cierre = [eslabon(c, b), eslabon(d, b), eslabon(c, d)]
+Cierre = [eslabon(d, b), eslabon(c, b), eslabon(c, d)]
+Cierre = [eslabon(d, b), eslabon(c, d), eslabon(c, b)]
+
+
+
+cierre([eslabon(c,b),eslabon(c,d),eslabon(d,b)],  [eslabon(c, d), eslabon(d, b), eslabon(c, b)]).
+
+yes;
+no
+
+
+cierreMinimo([eslabon(c,b),eslabon(c,d),eslabon(d,b)],X).
+
+X = 3
+
+
+
+cierre([eslabon(c,b),eslabon(d,b)],X).
+
+no
+%Tiene que haber al menos 3 eslabones.
+
+
+cierre([eslabon(c,b),eslabon(c,b),eslabon(c,d),eslabon(a,b),eslabon(e,b),eslabon(d,b),eslabon(a,e)], Cierre).
+
+no
+%Se repite eslabon(c,b).
+
+
+cierreUnico([eslabon(c,b),eslabon(c,b),eslabon(c,d),eslabon(a,b),eslabon(e,b),eslabon(d,b),eslabon(a,e)], Cierre).
+
+no
+%mismo caso que el anterior
+
+
+
+
