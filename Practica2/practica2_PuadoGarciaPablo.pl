@@ -25,13 +25,17 @@ second_last([X,_], X).
 second_last([_|Xs], X):-
   second_last(Xs, X).
 
+% 5. Comprueba el tamaño de la lista
+size([], R):- R is 0.
+size([_|X], R):- size(X, L), R is L + 1.
+
 % CIERRES
 % 1. Todos los cierres posibles.
-cierre(Le, X):-
-  length(Le, T), T >= 3,
-  not(vertex_same(Le)),
-  not(eslabones_same(Le)),
-  comb_N(T, Le, X),
+cierre(LE, X):-
+  length(LE, T), T >= 3,
+  not(vertex_same(LE)),
+  not(eslabones_same(LE)),
+  comb_N(T, LE, X),
   eslabones_all(X).
 									   
 % 2. Cierre mínimo.
@@ -94,19 +98,19 @@ is_band(A, B, C):-
   X\=Y.
 
 % 8. Comprueba si los extremos del eslabon son iguales.
-vertex_same([eslabon(X, Y)]):- 
+vertex_same([eslabon(X, Y)]):-
   X==Y.
-vertex_same([eslabon(X, Y)|_]):- 
+vertex_same([eslabon(X, Y)|_]):-
   X==Y.
-vertex_same([eslabon(_,_)|Xs]):- 
+vertex_same([eslabon(_,_)|Xs]):-
   vertex_same(Xs).
 
 % 9. Comprueba si los eslabones son iguales.
 eslabones_same([eslabon(A, B), Y|Xs]):-
-  remove(eslabon(A, B), [eslabon(A, B), Y|Xs], [Y|Xs]),
+  delete(eslabon(A, B), [eslabon(A, B), Y|Xs], [Y|Xs]),
   belong(eslabon(A, B), [Y|Xs]).
 eslabones_same([eslabon(A, B), Y|Xs]):-
-  remove(eslabon(A,B), [eslabon(A, B), Y|Xs], [Y|Xs]),
+  delete(eslabon(A,B), [eslabon(A, B), Y|Xs], [Y|Xs]),
   belong(eslabon(B, A), [Y|Xs]).
 eslabones_same([_|Xs]):-
   eslabones_same(Xs).
@@ -142,8 +146,8 @@ join_eslabon(L, X):-
 
 % OTROS PREDICADOS
 % Negación.
+not(_).
 not(Goal) :-
     call(Goal),
     !,
     fail.
-not(_).

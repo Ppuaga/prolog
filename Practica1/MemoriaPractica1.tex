@@ -56,7 +56,7 @@
 \tableofcontents
 \newpage
 \pagenumbering{arabic}
-\section{Planteamiento de la práctica}
+\section{cierre, cierreMinimo  y  cierreUnico}
 Una fábrica metalúrgica se está haciendo famosa gracias a unas cadenas que produce que han sido diseñadas por ella y resultan especialmente resistentes. Una de las claves del éxito está en los eslabones que emplean, que tienen un cierre especial en cada uno de sus dos extremos. Han diseñado cierres de tipos muy distintos, de forma que dos eslabones se pueden ensamblar entre sí por sus extremos solo si ambos extremos tienen el mismo tipo de cierre.\\\\
 El departamento de calidad está sometiendo las cadenas a pruebas de resistencia, para lo que utiliza cadenas cerradas, esto es, con eslabones ensamblados en línea uno tras otro y el último ensamblado con el primero. Para ayudarse en sus pruebas han solicitado un programa informático con las siguientes características. La realización del correspondiente código Prolog es lo que se solicita a los alumnos en esta práctica.\\\\
 El predicado $\textbf{cierre/2}$ debe tener éxito cuando su primer argumento es una lista de eslabones sin repeticiones y el segundo una lista que representa una cadena cerrada de eslabones de la primera lista (todos o solo algunos). Solo es necesario que funcione correctamente cuando el primer argumento se da en la llamada.\\\\
@@ -67,21 +67,21 @@ El predicado $\textbf{cierreUnico/2}$ debe comportarse igual que $cierre/2$ pero
 El predicado $\textbf{cierreMinimo/2}$ debe tener éxito cuando su primer argumento es una lista de eslabones sin repeticiones y su segundo argumento es el mínimo número de eslabones que contiene que pueden formar cadena cerrada. En este predicado se valorará positivamente que el código no obtenga todas las soluciones posibles para luego compararlas.\\\\
 Cuando se ensamblan físicamente dos eslabones se orientan de manera que los extremos de cada uno que se van a unir estén enfrentados el uno al otro. Sin embargo, esto no ocurre en el programa. Si la lista inicial de eslabones contiene $eslabon(a,b)$, éste se puede utilizar para una cadena cerrada enlazándolo mediante a con el anterior y mediante b con el siguiente, pero también al revés: mediante b con el anterior y mediante a con el siguiente, aunque el término que aparezca en ambos casos en la lista de la cadena cerrada debe ser $eslabon(a,b)$. (Es decir, no se “re-orienta” poniéndolo como $eslabon(b,a)$).\\\\
 \subsection{Código utilizado}
-\subsubsection{Predicado $remove/3$}
+\subsubsection{Predicado remove/3}
 \begin{lstlisting}[frame=single]
 remove(E, [E|T], T).
 remove(E, [H|T], [H|TE]):-
   remove(E, T, TE).
 \end{lstlisting}
 Este predicado elimina el elemento que se le indique de dentro de una lista.
-\subsubsection{Predicado $belong/2$}
+\subsubsection{Predicado belong/2}
 \begin{lstlisting}[frame=single]
 belong(E, [E|_]).
 belong(E, [_|T]):-
   belong(E, T).
 \end{lstlisting}
 El predicado determina si un elemento pertenece a determinada lista.
-\subsubsection{Predicado $do_list/3$}
+\subsubsection{Predicado dolist/3}
 \begin{lstlisting}[frame=single]
 do_list(N, L):- do_list1(N, [], L).
 do_list1(2, L, L):-
@@ -90,14 +90,14 @@ do_list1(N, R, L):-
   N > 0, N1 is N-1, do_list1(N1, [N|R], L).
 \end{lstlisting}
 Este predicado genera una lista de 3 hasta N elementos.
-\subsubsection{Predicado $second_last/2$}
+\subsubsection{Predicado secondlast/2}
 \begin{lstlisting}[frame=single]
 second_last([X,_], X).
 second_last([_|Xs], X):-
   second_last(Xs, X).
 \end{lstlisting}
 El predicado obtiene el penúltimo elemento de una lista dada.
-\subsubsection{Predicado $comb/3$}
+\subsubsection{Predicado comb/3}
 \begin{lstlisting}[frame=single]
 comb(0, _Xs, []).
 comb(N, [X|Xs], [X|Cs]):-
@@ -109,7 +109,7 @@ comb(N, [_X|Xs], Cs):-
   comb(N, Xs, Cs).
 \end{lstlisting}
 Este predicado devuelve todas las posibles combinaciones de longitud N de una lista dada.
-\subsubsection{Predicado $perm/2$}
+\subsubsection{Predicado perm/2}
 \begin{lstlisting}[frame=single]
 perm([], []).
 perm([X|Xs], PXs):-
@@ -117,7 +117,7 @@ perm([X|Xs], PXs):-
   remove(X, PXs, Ps).
 \end{lstlisting}
 Este predicado devuelve todas las posibles permutaciones de una lista dada.
-\subsubsection{Predicado $comb_N/3$}
+\subsubsection{Predicado combN/3}
 \begin{lstlisting}[frame=single]
 comb_N(N, L, X):-
   do_list(N, Ln),
@@ -125,7 +125,7 @@ comb_N(N, L, X):-
   apply_CyP(A, L, X).
 \end{lstlisting}
 Este predicado es una combinación de tres otros predicados (aparecen en el código) y devuelve todas las combinaciones, ya permutadas, de tamaño N de una lista dada.
-\subsubsection{Predicado $comb_one/3$}
+\subsubsection{Predicado combone/3}
 \begin{lstlisting}[frame=single]
 comb_one(N, L, X):-
   do_list(N, Ln),
@@ -133,14 +133,14 @@ comb_one(N, L, X):-
   comb(A, L, X).
 \end{lstlisting}
 Al igual que el predicado anterior, este está formado por otros del código. Y en este caso se obtienen varias combinaciones distintas, cada una de un tamaño distinto, desde tamaño 3 a N.
-\subsubsection{Predicado $apply_CyP/3$}
+\subsubsection{Predicado applyCyP/3}
 \begin{lstlisting}[frame=single]
 apply_CyP(N, L, X):-
   comb(N, L, Xs),
   perm(Xs, X).
 \end{lstlisting}
 Es una combinación al igual que los anteriores, y en este caso se obtienen todas las posibles combinaciones, ya permutadas, de una lista.
-\subsubsection{Predicado $is_linked/3$}
+\subsubsection{Predicado islinked/3}
 \begin{lstlisting}[frame=single]
 is_linked(eslabon(X,_), eslabon(X,_), X).
 is_linked(eslabon(X,_), eslabon(_,X), X).
@@ -148,7 +148,7 @@ is_linked(eslabon(_,X), eslabon(_,X), X).
 is_linked(eslabon(_,X), eslabon(X,_), X).
 \end{lstlisting}
 Se utiliza para comprobar si dos eslabones están enlazados entre ellos.
-\subsubsection{Predicado $is_band/3$}
+\subsubsection{Predicado isband/3}
 \begin{lstlisting}[frame=single]
 is_band(A, B, C):-
   is_linked(A, B, X),
@@ -156,7 +156,7 @@ is_band(A, B, C):-
   X\=Y.
 \end{lstlisting}
 Este predicado comprueba si 3 eslabones dados son adyacentes entre ellos.
-\subsubsection{Predicado $vertex_same/1$}
+\subsubsection{Predicado vertexsame/1}
 \begin{lstlisting}[frame=single]
 vertex_same([eslabon(X, Y)]):- 
   X==Y.
@@ -166,7 +166,7 @@ vertex_same([eslabon(_,_)|Xs]):-
   vertex_same(Xs).
 \end{lstlisting}
 Este predicado comprueba si los extremos del eslabón son iguales o distintos.
-\subsubsection{Predicado $eslabon_same/1$}
+\subsubsection{Predicado eslabonsame/1}
 \begin{lstlisting}[frame=single]
 eslabones_same([eslabon(A, B), Y|Xs]):-
   remove(eslabon(A, B), [eslabon(A, B), Y|Xs], [Y|Xs]),
@@ -178,7 +178,7 @@ eslabones_same([_|Xs]):-
   eslabones_same(Xs).
 \end{lstlisting}
 Este predicado comprueba si los eslabones son iguales $(eslabon(a,b)=eslabon(b,a))$.
-\subsubsection{Predicado $eslabon_all/1$}
+\subsubsection{Predicado eslabonall/1}
 \begin{lstlisting}[frame=single]
 eslabones_all([A, B, C]):-
   is_band(A, B, C),
@@ -194,7 +194,7 @@ eslabones_all([A, B, C|Cs]):-
 \end{lstlisting}
 Este predicado recibe como argumento una lista.
 El predicado devuelve todas las cadenas posibles que se pueden obtener a partir de la lista de eslabones dada.
-\subsubsection{Predicado $right_band/1$}
+\subsubsection{Predicado rightband/1}
 \begin{lstlisting}[frame=single]
 right_band([A, P, U]):-
   is_band(A, P, U).
@@ -204,7 +204,7 @@ right_band([A, B, C|Cs]):-
   right_band([B, C|Cs]).
 \end{lstlisting}
 Este predicado esta hecho para recorrer las cadenas que se van formando.
-\subsubsection{Predicado $join_eslabon/2$}
+\subsubsection{Predicado joineslabon/2}
 \begin{lstlisting}[frame=single]
 join_eslabon(L, X):-
   perm(L, X),
@@ -212,7 +212,7 @@ join_eslabon(L, X):-
   !.
 \end{lstlisting}
 Este predicado une las cadenas dadas en una misma.
-\subsubsection{Predicado $join_eslabon/2$}
+\subsubsection{Predicado joineslabon/2}
 \begin{lstlisting}[frame=single]
 not(Goal) :-
     call(Goal),
@@ -221,7 +221,7 @@ not(Goal) :-
 not(_).
 \end{lstlisting}
 Simple predicado auxiliar para negar un elemento.
-\subsubsection{Predicado $cierre/2$}
+\subsubsection{Predicado cierre/2}
 \begin{lstlisting}[frame=single]
 cierre(Le, X):-
   length(Le, T), T >= 3,
@@ -233,14 +233,14 @@ cierre(Le, X):-
 Este es uno de los tres métodos principales dados por la práctica.
 Este predicado recibe una lista de eslabones y devuelve otra lista con todas las posibles cadenas que se pueden formar con los eslabones del primer argumento.
 Las cadenas que se obtienen son todas correctas y cumplen los requisitos establecidos por la práctica.
-\subsubsection{Predicado $cierreMinimo/2$}
+\subsubsection{Predicado cierreMinimo/2}
 \begin{lstlisting}[frame=single]
 cierreMinimo(L, N):-
   cierre(L, S), !, size(S, N).
 \end{lstlisting}
 Este es otro de los tres métodos principales dados por la práctica.
 Este predicado es una extensión del método $cierre/2$, pero en este caso se devuelve el número mínimo de eslabones de la lista del argumento uno con los que se puede formar una cadena correctamente.
-\subsubsection{Predicado $cierreUnico/2$}
+\subsubsection{Predicado cierreUnico/2}
 \begin{lstlisting}[frame=single]
 cierreUnico(LE, Xs):-
   length(LE, T), T >= 3,
@@ -253,100 +253,70 @@ Este es otro de los tres métodos principales dados por la práctica.
 Al igual que $cierreUnico/2$ es una extensión de $cierre/2$, pero en esta ocasión el predicado devuelve una lista de cadenas en las que los eslabones ya usados en una cadena no van a poder estar en otra cadena.
 
 \subsection{Pruebas realizadas}
+\begin{lstlisting}[frame=single]
+?- cierre([eslabon(c,b),eslabon(c,d),eslabon(a,b),eslabon(e,b),eslabon(d,b),eslabon(a,e)], Cierre).
+Cierre = [eslabon(c,b),eslabon(c,d),eslabon(d,b)] ? n
+Cierre = [eslabon(c,d),eslabon(c,b),eslabon(d,b)] ? n
+Cierre = [eslabon(c,d),eslabon(d,b),eslabon(c,b)] ? n
+Cierre = [eslabon(c,b),eslabon(d,b),eslabon(c,d)] ? n
+Cierre = [eslabon(d,b),eslabon(c,b),eslabon(c,d)] ? n
+Cierre = [eslabon(d,b),eslabon(c,d),eslabon(c,b)] ? n
+Cierre = [eslabon(a,b),eslabon(e,b),eslabon(a,e)] ? n
+Cierre = [eslabon(e,b),eslabon(a,b),eslabon(a,e)] ? n
+Cierre = [eslabon(e,b),eslabon(a,e),eslabon(a,b)] ? n
+Cierre = [eslabon(a,b),eslabon(a,e),eslabon(e,b)] ? n
+Cierre = [eslabon(a,e),eslabon(a,b),eslabon(e,b)] ? n
+Cierre = [eslabon(a,e),eslabon(e,b),eslabon(a,b)] ? n
+Cierre = [eslabon(e,b),eslabon(c,b),eslabon(c,d),eslabon(d,b),eslabon(a,b),eslabon(a,e)] ? n
+Cierre = [eslabon(e,b),eslabon(d,b),eslabon(c,d),eslabon(c,b),eslabon(a,b),eslabon(a,e)] ? n
+Cierre = [eslabon(a,b),eslabon(c,b),eslabon(c,d),eslabon(d,b),eslabon(e,b),eslabon(a,e)] ? n
+Cierre = [eslabon(a,b),eslabon(d,b),eslabon(c,d),eslabon(c,b),eslabon(e,b),eslabon(a,e)] ? n
+Cierre = [eslabon(c,b),eslabon(c,d),eslabon(d,b),eslabon(e,b),eslabon(a,e),eslabon(a,b)] ? n
+Cierre = [eslabon(c,d),eslabon(d,b),eslabon(e,b),eslabon(a,e),eslabon(a,b),eslabon(c,b)] ? n
+Cierre = [eslabon(d,b),eslabon(c,d),eslabon(c,b),eslabon(e,b),eslabon(a,e),eslabon(a,b)] ? n
+Cierre = [eslabon(d,b),eslabon(e,b),eslabon(a,e),eslabon(a,b),eslabon(c,b),eslabon(c,d)] ? n
+Cierre = [eslabon(c,b),eslabon(c,d),eslabon(d,b),eslabon(a,b),eslabon(a,e),eslabon(e,b)] ? n
+Cierre = [eslabon(c,d),eslabon(d,b),eslabon(a,b),eslabon(a,e),eslabon(e,b),eslabon(c,b)] ? n
+Cierre = [eslabon(d,b),eslabon(c,d),eslabon(c,b),eslabon(a,b),eslabon(a,e),eslabon(e,b)] ? n
+Cierre = [eslabon(d,b),eslabon(a,b),eslabon(a,e),eslabon(e,b),eslabon(c,b),eslabon(c,d)] ? n
+Cierre = [eslabon(c,d),eslabon(c,b),eslabon(e,b),eslabon(a,e),eslabon(a,b),eslabon(d,b)] ? n
+Cierre = [eslabon(e,b),eslabon(a,e),eslabon(a,b),eslabon(c,b),eslabon(c,d),eslabon(d,b)] ? n
+Cierre = [eslabon(c,b),eslabon(e,b),eslabon(a,e),eslabon(a,b),eslabon(d,b),eslabon(c,d)] ? n
+Cierre = [eslabon(e,b),eslabon(a,e),eslabon(a,b),eslabon(d,b),eslabon(c,d),eslabon(c,b)] ? n
+Cierre = [eslabon(c,d),eslabon(c,b),eslabon(a,b),eslabon(a,e),eslabon(e,b),eslabon(d,b)] ? n
+Cierre = [eslabon(a,b),eslabon(a,e),eslabon(e,b),eslabon(c,b),eslabon(c,d),eslabon(d,b)] ? n
+Cierre = [eslabon(c,b),eslabon(a,b),eslabon(a,e),eslabon(e,b),eslabon(d,b),eslabon(c,d)] ? n
+Cierre = [eslabon(a,b),eslabon(a,e),eslabon(e,b),eslabon(d,b),eslabon(c,d),eslabon(c,b)] ? n
+Cierre = [eslabon(a,e),eslabon(e,b),eslabon(c,b),eslabon(c,d),eslabon(d,b),eslabon(a,b)] ? n
+Cierre = [eslabon(a,e),eslabon(e,b),eslabon(d,b),eslabon(c,d),eslabon(c,b),eslabon(a,b)] ? n
+Cierre = [eslabon(a,e),eslabon(a,b),eslabon(c,b),eslabon(c,d),eslabon(d,b),eslabon(e,b)] ? n
+Cierre = [eslabon(a,e),eslabon(a,b),eslabon(d,b),eslabon(c,d),eslabon(c,b),eslabon(e,b)] ? n
+no
 
-\section{Cuadrados fantásticos y secretos}
-Un cuadrado fantástico es una tabla o matriz de números enteros pares, de tal forma que la suma de los números por columnas y por filas es la misma (es decir, todas las columnas y todas las filas suman la misma cantidad). Los números pares empleados para rellenar las casillas de dicho cuadrado son consecutivos, de $2$ a $(2*N)$, siendo $N$ el número de columnas y filas del cuadrado fantástico.\\
-Por ejemplo, las siguiente matriz es un cuadrado fantástico en el que todas las columnas y todas las filas suman 12.
-% Tabla de ejemplo
-$$
-\begin{tabular}{| l | c | r |}
- \hline
- 2 & 4 & 6 \\ \hline
- 6 & 2 & 4 \\ \hline
- 4 & 6 & 2 \\
- \hline
-\end{tabular}
-$$
-\\
-Un cuadrado fantástico es secreto cuando cumple la propiedad de las tres esquinas. Esta propiedad se verifica cuando 2 esquinas están rellenas con el mismo número par $(A)$, y la suma de las otras dos esquinas es igual a dicho par $(B+C=A)$. Dicho número par $(A)$ se denomina número secreto.\\
-Por ejemplo, la siguiente matriz es un cuadrado fantástico secreto $(A=8; B=2; C=6)$ cuyo número secreto es $8$.
-% Tabla de ejemplo
-$$
-\begin{tabular}{| l | c | c | r |}
- \hline
- 2 & 4 & 6 & 8 \\ \hline
- 4 & 6 & 8 & 2 \\ \hline
- 6 & 8 & 2 & 4 \\ \hline
- 8 & 2 & 4 & 6 \\
- \hline
-\end{tabular}
-$$
-\\
-Se plantea la realización de un programa lófico puro en el que las matrices se representan como listas de listas (es decir, una matriz es una lista cuyos elementos son listas de números, en representación de Peano, que representan las filas).\\
-Se pide que los alumnos escriban el predicado $esCuadradoFantasticoSecreto/2$ que se verifique si su primer argumento (una matriz $M*M$) representa un cuadrado fantástico 2 secreto y su segundo argumento es el número secreto.\\
-Por ejemplo: 
-\begin{lstlisting}[frame=single]
-?-esCuadradoFantasticoSecreto([[s(s(0)),s(s(s(s(0)))),s(s(s(s(s(s(0))))))],[s(s(s(s(0)))),s(s(s(s(s(s(0)))))),s(s(0))],[s(s(s(s(s(s(0)))))),s(s(0)),s(s(s(s(0))))]],s(s(s(s(s(s(0))))))).
-yes
-\end{lstlisting}
-\subsection{Código utilizado}
-\subsubsection{Predicado $primerElemento/2$}
-\begin{lstlisting}[frame=single]
-primerElemento([X|_],X).
-\end{lstlisting}
-Este predicado tiene como argumentos una lista y un elemento dado (que puede ser una lista).\\
-La consulta devuelve un valor true si el elemento dado es la cabeza de la lista que se le esta pasando, y en caso de que sea una matriz se devuelve la primera fila. En caso contrario devolverá false.
-\subsubsection{Predicado $ultimoElemento/2$}
-\begin{lstlisting}[frame=single]
-ultimoElemento([Y],Y).
-ultimoElemento([_|Xs],Y):-ultimoElemento(Xs,Y).
-\end{lstlisting}
-Este predicado tiene como argumentos una lista y un elemento dado (que puede ser una lista). \\
-La consulta devuelve true si el elemento dado es el último elemento de la lista que se le esta pasando, y en caso de que sea una matriz se devuelve la última fila. En caso contrario devolverá false.
-\subsubsection{Predicado $suma/2$}
-\begin{lstlisting}[frame=single]
-suma(X,0,X).
-suma(A,s(B),s(Y)):-suma(A,B,Y).
-\end{lstlisting}
-A este predicado se le pasan como argumentos tres elementos.
-La consulta devuelve true si el tercer elemento dado es la suma de los dos anteriores. En caso contrario se devuelve false.
-\subsubsection{Predicado $triplicar/2$}
-\begin{lstlisting}[frame=single]
-triplicar(0,0).
-triplicar(s(X),s(s(s(Y)))):-triplicar(X,Y).
-\end{lstlisting}
-A este predicado se le pasan como argumentos dos elementos.
-La consulta devuelve true si el segundo elemento dado tiene un valor igual al triple del primer elemento. En caso contrario devolverá false.
-\subsubsection{Predicado $esCuadradoFantasticoSecreto/2$}
-\begin{lstlisting}[frame=single]
-esCuadradoFantasticoSecreto(M,S):-
-	primerElemento(M,L1),
-	primerElemento(L1,X1),
-	
-	ultimoElemento(M,Ln),
-	ultimoElemento(Ln,Xn),
-	
-	suma(X1,Xn,S1),
-	
-	ultimoElemento(L1,X2),
-	primerElemento(Ln,Xn1),
-	
-	suma(X2,Xn1,S2),
-	suma(S1,S2,S3),
-	
-	triplicar(S,S3).
-\end{lstlisting}
-Este predicado tiene como argumentos una lista y un elemento dado.
-La consulta devuelve true si el elemento es \textit{número secreto}. En caso contrario devolverá false.
-\subsection{Pruebas realizadas}
-\begin{lstlisting}[frame=single]
-?-esCuadradoFantasticoSecreto([[s(s(0)),s(s(s(s(0)))),s(s(s(s(s(s(0))))))],[s(s(s(s(0)))),s(s(s(s(s(s(0)))))),s(s(0))],[s(s(s(s(s(s(0)))))),s(s(0)),s(s(s(s(0))))]],s(s(s(s(s(s(0))))))).
+?- cierre([eslabon(c,b),eslabon(c,d),eslabon(a,b)], Cierre).
+no
+
+?- cierre([eslabon(c,b),eslabon(c,d),eslabon(d,b)], Cierre).
+Cierre = [eslabon(c,b),eslabon(c,d),eslabon(d,b)] ? n
+Cierre = [eslabon(c,d),eslabon(c,b),eslabon(d,b)] ? n
+Cierre = [eslabon(c,d),eslabon(d,b),eslabon(c,b)] ? n
+Cierre = [eslabon(c,b),eslabon(d,b),eslabon(c,d)] ? n
+Cierre = [eslabon(d,b),eslabon(c,b),eslabon(c,d)] ? n
+Cierre = [eslabon(d,b),eslabon(c,d),eslabon(c,b)] ? n
+no
+
+?- cierre([eslabon(c,b),eslabon(c,d),eslabon(d,b)], [eslabon(c,d),eslabon(d,b),eslabon(c,b)]).
 yes
 
-?-esCuadradoFantasticoSecreto([[s(s(0)),s(s(s(s(0)))),s(s(s(s(s(s(0))))))],[s(s(s(s(0)))),s(s(s(s(s(s(0)))))),s(s(0))],[s(s(s(s(s(s(0)))))),s(s(0)),s(s(s(s(0))))]],S).
-S = s(s(s(s(s(s(0))))))
+?- cierreMinimo([eslabon(c,b),eslabon(c,d),eslabon(d,b)],X).
+X = 3 ? n 
+no
 
-?-esCuadradoFantasticoSecreto([[s(s(0)),s(s(s(s(0)))),s(s(s(s(s(s(0)))))),s(s(s(s(s(s(s(s(0))))))))],[s(s(s(s(0)))),s(s(s(s(s(s(0)))))),s(s(s(s(s(s(s(s(0)))))))),s(s(0))],[s(s(s(s(s(s(0)))))),s(s(s(s(s(s(s(s(0)))))))),s(s(0)),s(s(s(s(0))))],[s(s(s(s(s(s(s(s(0)))))))),s(s(0)),s(s(s(s(0)))),s(s(s(s(s(s(0))))))]],S).
-S = s(s(s(s(s(s(s(s(0))))))))
+?- cierre([eslabon(c,b),eslabon(d,b)],X).
+no
 \end{lstlisting}
+\tiny *Se han eliminado los guiones bajos de algunos de los nombres de los predicados por un problemilla técnico con \LaTeX . En los fragmentos de código insertados aquí y en el archivo .pl si que aparecen ciertos guiones.
+\\
+Muchas gracias por su comprensión.
 \end{document}
+
